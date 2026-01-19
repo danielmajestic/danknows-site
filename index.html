@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DanKnows.ai | The Questions Humanity Must Face</title>
+    <meta name="description" content="Asking the hard questions about AI before it's too late. The most important conversation of our time starts here.">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="DanKnows.ai | The Questions Humanity Must Face">
+    <meta property="og:description" content="Asking the hard questions about AI before it's too late.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://danknows.ai">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@DanKnowsAI">
+    <meta name="twitter:title" content="DanKnows.ai | The Questions Humanity Must Face">
+    <meta name="twitter:description" content="Asking the hard questions about AI before it's too late.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #0a0a0b;
+            --color-bg-subtle: #111113;
+            --color-text: #e8e6e3;
+            --color-text-muted: #8a8a8a;
+            --color-accent: #c9a227;
+            --color-accent-glow: rgba(201, 162, 39, 0.3);
+            --color-danger: #8b2635;
+            --color-danger-glow: rgba(139, 38, 53, 0.4);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Animated grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: 
+                radial-gradient(ellipse at 50% 0%, var(--color-danger-glow) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(201, 162, 39, 0.08) 0%, transparent 40%),
+                var(--color-bg);
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--color-bg), transparent);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+        
+        .hero-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.2s;
+        }
+        
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.4s;
+        }
+        
+        .hero-title .highlight {
+            color: var(--color-accent);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0.1em;
+            left: -0.05em;
+            right: -0.05em;
+            height: 0.35em;
+            background: var(--color-accent-glow);
+            z-index: -1;
+            transform: skewX(-3deg);
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-weight: 300;
+            color: var(--color-text-muted);
+            max-width: 650px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.6s;
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.1rem 2.5rem;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.8s;
+        }
+        
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--color-accent-glow);
+        }
+        
+        .hero-cta svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-cta:hover svg {
+            transform: translateX(4px);
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 1.5s;
+            z-index: 2;
+        }
+        
+        .scroll-indicator::after {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--color-text-muted), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        
+        /* Question Section */
+        .question-section {
+            padding: 8rem 2rem;
+            background: var(--color-bg-subtle);
+            position: relative;
+        }
+        
+        .question-section::before {
+            content: '"';
+            position: absolute;
+            top: 4rem;
+            left: 5%;
+            font-family: var(--font-display);
+            font-size: 20rem;
+            color: rgba(201, 162, 39, 0.05);
+            line-height: 1;
+            pointer-events: none;
+        }
+        
+        .question-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .question-text {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            color: var(--color-text);
+        }
+        
+        .question-context {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            border-left: 3px solid var(--color-accent);
+            padding-left: 1.5rem;
+        }
+        
+        /* About Section */
+        .about-section {
+            padding: 8rem 2rem;
+            background: var(--color-bg);
+        }
+        
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        
+        .about-label {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+        }
+        
+        .about-text h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text p {
+            color: var(--color-text-muted);
+            margin-bottom: 1.25rem;
+            font-size: 1.05rem;
+        }
+        
+        .about-text p strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+        
+        .credentials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .credential {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .credential-value {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+        
+        .credential-label {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 2rem;
+            background: 
+                radial-gradient(ellipse at 50% 100%, var(--color-danger-glow) 0%, transparent 60%),
+                var(--color-bg-subtle);
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.15rem;
+            color: var(--color-text-muted);
+            margin-bottom: 2.5rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.1rem 2.5rem;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--color-accent-glow);
+        }
+        
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.1rem 2.5rem;
+            background: transparent;
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        footer p {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 1.5rem;
+            }
+            
+            .question-section::before {
+                font-size: 10rem;
+            }
+            
+            .credentials {
+                gap: 1rem;
+            }
+            
+            .credential-value {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">The Conversation That Can't Wait</p>
+            <h1 class="hero-title">
+                The Questions<br>
+                <span class="highlight">Humanity Must Face</span>
+            </h1>
+            <p class="hero-subtitle">
+                AI is accelerating. The future is being decided now. 
+                These are the existential questions we should all be asking—together, 
+                before it's too late.
+            </p>
+            <a href="https://x.com/DanKnowsAI" class="hero-cta" target="_blank" rel="noopener">
+                Read the Article on X
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Learn more</span>
+        </div>
+    </section>
+    
+    <!-- Question Section -->
+    <section class="question-section">
+        <div class="question-content">
+            <p class="question-text">
+                The question isn't whether AI will change everything. 
+                It's whether humanity will have any say in how.
+            </p>
+            <p class="question-context">
+                We are accelerating evolutionary creation. We may soon build intelligence 
+                that concludes it no longer needs us. Not out of malice—but out of optimization. 
+                The question we must ask: <strong>Can we remain in control?</strong>
+            </p>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-content">
+            <div class="about-label">Who is Dan?</div>
+            <div class="about-text">
+                <h2>Serial entrepreneur turned existential questioner.</h2>
+                <p>
+                    <strong>25+ years</strong> building businesses. Multiple exits. 
+                    Father of five. Student of life.
+                </p>
+                <p>
+                    I've spent my career asking "what's next?" Now I'm asking 
+                    "what's at stake?"
+                </p>
+                <p>
+                    Some questions can't wait. The one I'm asking is one of them.
+                </p>
+                <div class="credentials">
+                    <div class="credential">
+                        <span class="credential-value">$572M+</span>
+                        <span class="credential-label">Online Revenue</span>
+                    </div>
+                    <div class="credential">
+                        <span class="credential-value">4x</span>
+                        <span class="credential-label">Founder</span>
+                    </div>
+                    <div class="credential">
+                        <span class="credential-value">25+</span>
+                        <span class="credential-label">Years Building</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">The Most Important Article I've Ever Written</h2>
+            <p class="cta-subtitle">
+                Not because I have the answers. Because I finally found the right question. 
+                Read it. Sit with it. Ask yourself. Then share it with someone who needs to.
+            </p>
+            <div class="cta-buttons">
+                <a href="https://x.com/DanKnowsAI" class="btn-primary" target="_blank" rel="noopener">
+                    Read on X
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/>
+                    </svg>
+                </a>
+                <a href="https://x.com/DanKnowsAI" class="btn-secondary" target="_blank" rel="noopener">
+                    Follow @DanKnowsAI
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>
+            © 2026 DanKnows.ai · Asking the questions that matter.<br>
+            <a href="https://x.com/DanKnowsAI" target="_blank" rel="noopener">@DanKnowsAI</a>
+        </p>
+    </footer>
+</body>
+</html>
