@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The CC Team Builder's Guide — From Dusty PC to AI Dev Team | @DanKnows</title>
+<meta name="description" content="The complete 15-section technical playbook for building a team of autonomous Claude Code agents on a home server. Free guide by Dan, serial entrepreneur with 25+ years of execution.">
+<meta property="og:title" content="CC Team Builder's Guide — Build Your AI Dev Team">
+<meta property="og:description" content="15-section, 41-page technical playbook: autonomous Claude Code agents on your home server. Free from @DanKnows.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://danknows.org/guide">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@DanKnows">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #09090b;
+  --bg-card: #131316;
+  --bg-card-hover: #1a1a1f;
+  --border: #27272a;
+  --border-accent: #22c55e;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent: #22c55e;
+  --accent-dim: rgba(34, 197, 94, 0.12);
+  --accent-glow: rgba(34, 197, 94, 0.25);
+  --danger: #ef4444;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-brand {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.topbar-tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--accent-dim);
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  border: 1px solid rgba(34, 197, 94, 0.15);
+}
+
+/* Hero */
+.hero { margin-bottom: 2.5rem; }
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-eyebrow::before {
+  content: '>';
+  opacity: 0.5;
+}
+
+.pulse-dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent-glow); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px transparent; }
+}
+
+h1 {
+  font-family: var(--sans);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+h1 .accent { color: var(--accent); }
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 560px;
+}
+
+.hero-sub strong { color: var(--text-primary); font-weight: 600; }
+
+/* Stats strip */
+.stats {
+  display: flex;
+  gap: 1px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.stat {
+  flex: 1;
+  background: var(--bg-card);
+  padding: 1rem 0.75rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: var(--mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent);
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.2rem;
+}
+
+/* What's Inside */
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.contents {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.contents-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.contents-item:hover {
+  border-color: rgba(34, 197, 94, 0.3);
+  background: var(--bg-card-hover);
+}
+
+.contents-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  opacity: 0.6;
+  min-width: 1.5rem;
+  padding-top: 0.1rem;
+}
+
+.contents-text { flex: 1; }
+.contents-text strong { color: var(--text-primary); font-weight: 500; }
+
+/* Author credibility */
+.author-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 2.5rem;
+}
+
+.author-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-dim), var(--bg-card-hover));
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.author-info { flex: 1; }
+
+.author-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+
+.author-handle {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.author-cred {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+/* Form Card */
+.form-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.form-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.form-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.form-group { margin-bottom: 1rem; }
+
+.form-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input::placeholder { color: var(--text-muted); }
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.form-input.error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.form-error {
+  font-size: 0.78rem;
+  color: var(--danger);
+  margin-top: 0.35rem;
+  display: none;
+}
+
+.form-error.visible { display: block; }
+
+.form-btn {
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  background: var(--accent);
+  color: #09090b;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+.form-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.form-btn:active { transform: translateY(0); }
+
+.form-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-btn .spinner {
+  display: none;
+  width: 18px; height: 18px;
+  border: 2px solid rgba(9,9,11,0.3);
+  border-top-color: #09090b;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+.form-btn.loading .spinner { display: block; }
+.form-btn.loading .btn-text { opacity: 0.7; }
+
+.form-note {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.85rem;
+}
+
+.form-note a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding-top: 3rem;
+  margin-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.footer-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.footer-text a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .container { padding: 1.5rem 1rem 3rem; }
+  .stats { flex-direction: column; }
+  .stat { padding: 0.75rem; }
+  .form-card { padding: 1.25rem 1.1rem; }
+  .author-bar { flex-direction: column; text-align: center; gap: 0.6rem; }
+}
+
+/* Loading state overlay */
+.success-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 9, 11, 0.92);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-overlay.visible {
+  display: flex;
+}
+
+.success-box {
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+}
+
+.success-icon {
+  width: 56px; height: 56px;
+  background: var(--accent-dim);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  font-size: 1.5rem;
+}
+
+.success-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.success-msg {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.success-cta {
+  display: inline-block;
+  padding: 0.65rem 1.5rem;
+  background: var(--accent);
+  color: #09090b;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform 0.15s;
+}
+
+.success-cta:hover { transform: translateY(-1px); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav class="topbar">
+    <a href="https://danknows.org" class="topbar-brand">@DanKnows</a>
+    <span class="topbar-tag">FREE GUIDE</span>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span class="pulse-dot"></span>
+      Technical Playbook — Feb 2026
+    </div>
+    <h1>Turn a Dusty PC Into a <span class="accent">3-Agent AI Dev Team</span> That Ships Code While You Sleep</h1>
+    <p class="hero-sub">
+      The exact system I built to run <strong>autonomous Claude Code agents</strong> on a home server — 
+      dispatched through Slack, coordinated by a PM agent, and working 24/7. 
+      <strong>15 sections. 41 pages. Every config file included.</strong>
+    </p>
+  </section>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-value">15</span>
+      <span class="stat-label">Sections</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">41</span>
+      <span class="stat-label">Pages</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">100%</span>
+      <span class="stat-label">Copy-Paste Code</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">$0</span>
+      <span class="stat-label">Price</span>
+    </div>
+  </div>
+
+  <div class="section-label">What's Inside</div>
+  <div class="contents">
+    <div class="contents-item">
+      <span class="contents-num">01</span>
+      <span class="contents-text"><strong>Hardware Requirements</strong> — what you actually need (hint: not a Mac Mini)</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">02</span>
+      <span class="contents-text"><strong>Ubuntu Installation</strong> — full walkthrough, BIOS to first boot</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">03</span>
+      <span class="contents-text"><strong>SSH + Tailscale + Mobile Access</strong> — control your server from anywhere</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">04</span>
+      <span class="contents-text"><strong>Claude Code Installation & Auth</strong> — the credentials.json architecture</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">05</span>
+      <span class="contents-text"><strong>Agent Workspace Structure</strong> — directories, symlinks, CLAUDE.md files</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">06</span>
+      <span class="contents-text"><strong>Shared Memory Architecture</strong> — agents that get smarter over time</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">07</span>
+      <span class="contents-text"><strong>tmux: Persistent Sessions</strong> — the unsung hero of the system</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">08</span>
+      <span class="contents-text"><strong>Slack Integration</strong> — bot setup, channels, posting & reading scripts</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">09</span>
+      <span class="contents-text"><strong>The Dispatch Pipeline</strong> — plain English → decompose → execute</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">10</span>
+      <span class="contents-text"><strong>Self-Healing Agent Watcher</strong> — auto-restart crashed agents in 5 min</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">11</span>
+      <span class="contents-text"><strong>n8n: Self-Hosted Zapier</strong> — Docker setup + Google Workspace connect</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">12</span>
+      <span class="contents-text"><strong>Cloudflare Tunnel</strong> — zero-port dashboard access from anywhere</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">13</span>
+      <span class="contents-text"><strong>The --dangerously-skip-permissions Flag</strong> — why and how</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">14</span>
+      <span class="contents-text"><strong>Troubleshooting Guide</strong> — every failure mode I've hit + fixes</span>
+    </div>
+    <div class="contents-item">
+      <span class="contents-num">15</span>
+      <span class="contents-text"><strong>Agent Persona Templates</strong> — copy-paste CLAUDE.md for Mat, Kat, Sam</span>
+    </div>
+  </div>
+
+  <div class="author-bar">
+    <div class="author-avatar">DK</div>
+    <div class="author-info">
+      <div class="author-name">Dan</div>
+      <a href="https://x.com/DanKnows" class="author-handle" target="_blank" rel="noopener">@DanKnows</a>
+      <div class="author-cred">Serial entrepreneur · 25+ years building · 8-figure exits</div>
+    </div>
+  </div>
+
+  <div class="form-card" id="form-card">
+    <div class="form-title">Get the Guide — Free, Instant Delivery</div>
+    <div class="form-subtitle">PDF lands in your inbox in under 60 seconds.</div>
+    <form id="opt-in-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="first-name">First Name</label>
+        <input type="text" id="first-name" name="firstName" class="form-input" placeholder="Dan" required autocomplete="given-name">
+        <div class="form-error" id="name-error">What should I call you?</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email">
+        <div class="form-error" id="email-error">I need a real email to send the PDF.</div>
+      </div>
+      <input type="text" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="source" id="source-field" value="direct">
+      <button type="submit" class="form-btn" id="submit-btn">
+        <span class="btn-text">Send Me the Builder's Guide →</span>
+        <span class="spinner"></span>
+      </button>
+      <div class="form-note">No spam. Unsubscribe anytime. I respect your inbox like I respect my own.</div>
+    </form>
+  </div>
+
+  <footer class="footer">
+    <p class="footer-text">
+      © 2026 <a href="https://danknows.org">DanKnows.org</a> · 
+      <a href="https://x.com/DanKnows" target="_blank" rel="noopener">X</a> · 
+      <a href="https://danknows.substack.com" target="_blank" rel="noopener">Substack</a>
+    </p>
+  </footer>
+</div>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-box">
+    <div class="success-icon">✓</div>
+    <div class="success-title">You're In — Check Your Email!</div>
+    <p class="success-msg">The CC Team Builder's Guide is on its way to your inbox right now. While you wait, follow along for more builds:</p>
+    <a href="https://x.com/DanKnows" class="success-cta" target="_blank" rel="noopener">Follow @DanKnows on X →</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Detect source from URL params
+  const params = new URLSearchParams(window.location.search);
+  const src = params.get('src') || params.get('utm_source') || 'direct';
+  document.getElementById('source-field').value = src;
+
+  // ── CONFIGURE THIS ──
+  const WEBHOOK_URL = 'YOUR_N8N_WEBHOOK_URL_HERE'; // e.g. https://n8n.yourdomain.com/webhook/guide-optin
+  // ────────────────────
+
+  const form = document.getElementById('opt-in-form');
+  const btn = document.getElementById('submit-btn');
+  const nameInput = document.getElementById('first-name');
+  const emailInput = document.getElementById('email');
+  const nameError = document.getElementById('name-error');
+  const emailError = document.getElementById('email-error');
+
+  function validate() {
+    let valid = true;
+    nameError.classList.remove('visible');
+    emailError.classList.remove('visible');
+    nameInput.classList.remove('error');
+    emailInput.classList.remove('error');
+
+    if (!nameInput.value.trim()) {
+      nameError.classList.add('visible');
+      nameInput.classList.add('error');
+      valid = false;
+    }
+
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(emailInput.value.trim())) {
+      emailError.classList.add('visible');
+      emailInput.classList.add('error');
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    // Honeypot check
+    if (form.honeypot && form.honeypot.value) return;
+
+    btn.disabled = true;
+    btn.classList.add('loading');
+
+    const payload = {
+      firstName: nameInput.value.trim(),
+      email: emailInput.value.trim().toLowerCase(),
+      source: document.getElementById('source-field').value,
+      timestamp: new Date().toISOString(),
+      page: 'guide'
+    };
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'no-cors' // fallback if CORS not configured
+      });
+
+      // Show success regardless (no-cors won't give us response)
+      document.getElementById('success-overlay').classList.add('visible');
+
+      // Track conversion if analytics present
+      if (typeof gtag === 'function') {
+        gtag('event', 'guide_signup', { method: payload.source });
+      }
+    } catch (err) {
+      // Still show success — the webhook likely fired
+      document.getElementById('success-overlay').classList.add('visible');
+    }
+  });
+
+  // Dismiss overlay on click outside
+  document.getElementById('success-overlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('visible');
+  });
+})();
+</script>
+</body>
+</html>
