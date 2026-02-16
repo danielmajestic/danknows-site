@@ -729,10 +729,10 @@ h1 .accent { color: var(--accent); }
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        mode: 'no-cors' // fallback if CORS not configured
+
       });
 
-      // Show success regardless (no-cors won't give us response)
+      // Show success
       document.getElementById('success-overlay').classList.add('visible');
 
       // Track conversion if analytics present
