@@ -455,22 +455,123 @@
             50% { opacity: 1; }
         }
         
+        /* Featured Post */
+        .featured-post-section {
+            padding: 3rem 2rem;
+            background: var(--color-bg);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .featured-post-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .featured-post-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .featured-post-card {
+            display: block;
+            text-decoration: none;
+            background: var(--color-bg-subtle);
+            border: 1px solid rgba(201, 162, 39, 0.25);
+            border-left: 4px solid var(--color-accent);
+            padding: 2rem 2.25rem;
+            transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-post-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 0% 50%, rgba(201,162,39,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .featured-post-card:hover {
+            border-color: var(--color-accent);
+            background: rgba(201, 162, 39, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .featured-post-meta {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-post-meta span {
+            color: var(--color-accent);
+            margin-right: 0.75rem;
+        }
+
+        .featured-post-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 3vw, 1.85rem);
+            font-weight: 700;
+            color: var(--color-text);
+            line-height: 1.3;
+            margin-bottom: 0.875rem;
+        }
+
+        .featured-post-hook {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            line-height: 1.65;
+            max-width: 680px;
+            margin-bottom: 1.25rem;
+        }
+
+        .featured-post-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            letter-spacing: 0.04em;
+        }
+
+        .featured-post-cta svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .featured-post-card:hover .featured-post-cta svg {
+            transform: translateX(4px);
+        }
+
         /* Responsive adjustments */
         @media (max-width: 600px) {
             .hero {
                 padding: 1.5rem;
             }
-            
+
             .question-section::before {
                 font-size: 10rem;
             }
-            
+
             .credentials {
                 gap: 1rem;
             }
-            
+
             .credential-value {
                 font-size: 1.5rem;
+            }
+
+            .featured-post-card {
+                padding: 1.5rem 1.25rem;
             }
         }
     </style>
@@ -501,6 +602,26 @@
         </div>
     </section>
     
+    <!-- Featured Post -->
+    <section class="featured-post-section">
+        <div class="featured-post-inner">
+            <p class="featured-post-eyebrow">★ Latest Article</p>
+            <a href="/blog/perfectasin-appsumo/" class="featured-post-card">
+                <div class="featured-post-meta">
+                    <span>New</span>March 10, 2026 &nbsp;·&nbsp; 12 min read
+                </div>
+                <h2 class="featured-post-title">I Can't Get Hired. So I Built a 3-Agent AI Dev Team and Shipped a Product Instead.</h2>
+                <p class="featured-post-hook">The story behind PerfectASIN and a 3-agent AI dev team built on a $200 gaming PC. 1,600 job applications. 7 final rounds. 0 offers. Here's what happened next.</p>
+                <span class="featured-post-cta">
+                    Read the full story
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </section>
+
     <!-- Question Section -->
     <section class="question-section">
         <div class="question-content">
