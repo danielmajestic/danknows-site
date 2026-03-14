@@ -55,6 +55,48 @@
             overflow-x: hidden;
         }
         
+        /* ── Site Nav ── */
+        .site-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 2rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 10, 11, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .site-nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+        .site-nav-logo span { color: var(--color-accent); }
+        .site-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .site-nav-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: color 0.2s;
+        }
+        .site-nav-links a:hover { color: var(--color-accent); }
+        @media (max-width: 480px) {
+            .site-nav-links a:not(.nav-team) { display: none; }
+        }
+
         /* Animated grain overlay */
         body::before {
             content: '';
@@ -71,6 +113,7 @@
         
         /* Hero Section */
         .hero {
+            padding-top: 3.5rem; /* offset for fixed nav */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -577,6 +620,15 @@
     </style>
 </head>
 <body>
+    <!-- Site Nav -->
+    <nav class="site-nav">
+        <a href="/" class="site-nav-logo">Dan<span>Knows</span></a>
+        <div class="site-nav-links">
+            <a href="/team.html" class="nav-team">Meet My Team</a>
+            <a href="https://x.com/DanKnows" target="_blank" rel="noopener">@DanKnows</a>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
@@ -699,6 +751,8 @@
         <p>
             © 2026 DanKnows.org · Asking the questions that matter.<br>
             <a href="https://x.com/DanKnows" target="_blank" rel="noopener">@DanKnows</a>
+            &nbsp;·&nbsp;
+            <a href="/team.html">Meet My Team</a>
         </p>
     </footer>
 </body>

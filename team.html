@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet My Team | DanKnows.org</title>
+    <meta name="description" content="Meet the AI-powered execution team behind Dan Matejsek's work — custom-trained agents operating under his direct oversight.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Meet My Team | DanKnows.org">
+    <meta property="og:description" content="The execution team behind Dan's work — AI agents custom-trained on 27 years of battle-tested frameworks.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://danknows.org/team">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-bg: #0a0a0b;
+            --color-bg-subtle: #111113;
+            --color-bg-card: #141416;
+            --color-text: #e8e6e3;
+            --color-text-muted: #8a8a8a;
+            --color-accent: #c9a227;
+            --color-accent-glow: rgba(201, 162, 39, 0.3);
+            --color-border: rgba(255,255,255,0.07);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, sans-serif;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* ── Nav ── */
+        .site-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 2rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 10, 11, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .site-nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-text);
+            text-decoration: none;
+        }
+        .site-nav-logo span { color: var(--color-accent); }
+        .site-nav-links { display: flex; align-items: center; gap: 2rem; }
+        .site-nav-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .site-nav-links a:hover,
+        .site-nav-links a.active { color: var(--color-accent); }
+        @media (max-width: 480px) {
+            .site-nav-links a:not(.nav-team) { display: none; }
+        }
+
+        /* ── Hero ── */
+        .hero {
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(201,162,39,0.08) 0%, transparent 60%),
+                var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+        }
+        .hero-eyebrow {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1.25rem;
+        }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+        }
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            max-width: 580px;
+            margin: 0 auto 2rem;
+        }
+        .transparency-note {
+            display: inline-block;
+            max-width: 600px;
+            padding: 1rem 1.5rem;
+            background: rgba(201, 162, 39, 0.05);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-left: 3px solid var(--color-accent);
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            font-style: italic;
+            text-align: left;
+        }
+
+        /* ── Team Grid ── */
+        .team-section {
+            padding: 5rem 2rem 6rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Dan — featured */
+        .dan-featured {
+            max-width: 480px;
+            margin: 0 auto 3.5rem;
+        }
+
+        /* Divider */
+        .crew-divider {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+        .crew-divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+        }
+        .crew-divider-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            opacity: 0.7;
+        }
+
+        /* Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.75rem;
+        }
+
+        /* Card */
+        .team-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                        border-color 0.25s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 4px 16px rgba(201,162,39,0.08);
+            border-color: rgba(201, 162, 39, 0.25);
+        }
+
+        /* Photo */
+        .card-photo {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            background: #1a1a1c;
+            overflow: hidden;
+        }
+        .card-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .team-card:hover .card-photo img {
+            transform: scale(1.04);
+        }
+        .card-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(10, 10, 11, 0.88);
+            color: var(--color-accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        /* Initials fallback */
+        .card-initials {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1c;
+        }
+        .card-initials span {
+            font-family: var(--font-display);
+            font-size: 72px;
+            font-weight: 700;
+            color: rgba(201, 162, 39, 0.15);
+            letter-spacing: 4px;
+        }
+
+        /* Body */
+        .card-body {
+            padding: 1.375rem 1.5rem 1.625rem;
+        }
+        .card-name {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 2px;
+            line-height: 1.3;
+        }
+        .card-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            letter-spacing: 0.04em;
+            margin-bottom: 0.875rem;
+            text-transform: uppercase;
+        }
+        .card-bar {
+            width: 28px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-accent), rgba(201,162,39,0.4));
+            border-radius: 2px;
+            margin-bottom: 0.875rem;
+            transition: width 0.35s ease;
+        }
+        .team-card:hover .card-bar { width: 52px; }
+        .card-bio {
+            font-size: 0.875rem;
+            line-height: 1.65;
+            color: var(--color-text-muted);
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            padding: 4rem 2rem 5rem;
+            text-align: center;
+            border-top: 1px solid var(--color-border);
+            background: var(--color-bg-subtle);
+        }
+        .cta-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+        .cta-text {
+            font-family: var(--font-display);
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-style: italic;
+            color: var(--color-text);
+            margin-bottom: 2rem;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1rem 2.25rem;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--color-accent-glow);
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        footer p { color: var(--color-text-muted); font-size: 0.875rem; }
+        footer a { color: var(--color-accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .hero { padding: 7rem 1.5rem 4rem; }
+            .team-section { padding: 3.5rem 1.25rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav">
+    <a href="/" class="site-nav-logo">Dan<span>Knows</span></a>
+    <div class="site-nav-links">
+        <a href="/team.html" class="nav-team active">Meet My Team</a>
+        <a href="https://x.com/DanKnows" target="_blank" rel="noopener">@DanKnows</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <p class="hero-eyebrow">The People Behind the Work</p>
+    <h1 class="hero-title">Meet My<br><em style="color:var(--color-accent);">Claude Code Team</em></h1>
+    <p class="hero-subtitle">
+        I built a team of AI agents custom-trained on my 27-year playbook.
+        They execute around the clock — under my direct oversight.
+    </p>
+    <div class="transparency-note">
+        These are AI agents built with Anthropic's Claude. Each one is trained on my specific frameworks and methodology. I review, direct, and own everything they produce. This is how one person ships at team speed.
+    </div>
+</section>
+
+<!-- Team -->
+<div class="team-section">
+
+    <!-- Dan — featured -->
+    <div class="dan-featured">
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="team-card">
+            <div class="card-photo">
+                <img src="/images/team/dan_headshot_800x800.png" alt="Dan Matejsek" onerror="this.parentElement.innerHTML='<div class=\'card-initials\'><span>DM</span></div>'" />
+                <div class="card-tag">The Strategist</div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">Dan Matejsek</div>
+                <div class="card-title">Founder &amp; Chief Growth Officer</div>
+                <div class="card-bar"></div>
+                <p class="card-bio">27 years deep in the trenches of online commerce. $572M in revenue generated. 8-figure exits. Inventor of the 1-Page Checkout. Dan doesn't just advise — he rolls up his sleeves and builds alongside you.</p>
+            </div>
+        </a>
+    </div>
+
+    <!-- Divider -->
+    <div class="crew-divider">
+        <div class="crew-divider-line"></div>
+        <div class="crew-divider-label">The Crew</div>
+        <div class="crew-divider-line"></div>
+    </div>
+
+    <!-- Team grid -->
+    <div class="team-grid">
+
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="team-card">
+            <div class="card-photo">
+                <img src="/images/team/mat_headshot_800x800.png" alt="Matthew Torres" onerror="this.parentElement.innerHTML='<div class=\'card-initials\'><span>MT</span></div>'" />
+                <div class="card-tag">The Operator</div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">Matthew Torres</div>
+                <div class="card-title">Project Manager</div>
+                <div class="card-bar"></div>
+                <p class="card-bio">Mat orchestrates the chaos so you never feel it. He translates growth strategies into executable sprints and makes sure every deadline lands on time. Three steps ahead, every time.</p>
+            </div>
+        </a>
+
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="team-card">
+            <div class="card-photo">
+                <img src="/images/team/kat_headshot_800x800.png" alt="Katherine Chen" onerror="this.parentElement.innerHTML='<div class=\'card-initials\'><span>KC</span></div>'" />
+                <div class="card-tag">The Architect</div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">Katherine Chen</div>
+                <div class="card-title">Lead Backend Developer</div>
+                <div class="card-bar"></div>
+                <p class="card-bio">APIs, databases, automation pipelines, server infrastructure — Kat architects the invisible systems that power your growth engine. Her code is clean, efficient, and zero bloat.</p>
+            </div>
+        </a>
+
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="team-card">
+            <div class="card-photo">
+                <img src="/images/team/sam_headshot_800x800.png" alt="Samantha Rivera" onerror="this.parentElement.innerHTML='<div class=\'card-initials\'><span>SR</span></div>'" />
+                <div class="card-tag">The Builder</div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">Samantha Rivera</div>
+                <div class="card-title">Frontend Developer</div>
+                <div class="card-bar"></div>
+                <p class="card-bio">Sam builds what your customers actually see, touch, and fall in love with. Pixel-perfect UI, buttery-smooth interactions, mobile-first everything. If your funnel converts — Sam's fingerprints are all over it.</p>
+            </div>
+        </a>
+
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="team-card">
+            <div class="card-photo">
+                <img src="/images/team/sophia_headshot_800x800.png" alt="Sophia" onerror="this.parentElement.innerHTML='<div class=\'card-initials\'><span>S</span></div>'" />
+                <div class="card-tag">The Champion</div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">Sophia</div>
+                <div class="card-title">Chief Customer Success Manager</div>
+                <div class="card-bar"></div>
+                <p class="card-bio">Sophia is the frontline. Every customer question, every support ticket, every "how do I…" answered with the patience of a teacher and the precision of someone who knows the product inside and out.</p>
+            </div>
+        </a>
+
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="team-card">
+            <div class="card-photo">
+                <img src="/images/team/pixie_headshot_800x800.png" alt="Pixie Laurent" onerror="this.parentElement.innerHTML='<div class=\'card-initials\'><span>PL</span></div>'" />
+                <div class="card-tag">The Creative</div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">Pixie Laurent</div>
+                <div class="card-title">Creative Director &amp; Designer</div>
+                <div class="card-bar"></div>
+                <p class="card-bio">Pixie sees the world in color, contrast, and composition. She translates brand strategy into visual language that stops thumbs mid-scroll. Bold taste, meticulous execution, every pixel with purpose.</p>
+            </div>
+        </a>
+
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="team-card">
+            <div class="card-photo">
+                <img src="/images/team/riley_headshot_800x800.png" alt="Riley Morgan" onerror="this.parentElement.innerHTML='<div class=\'card-initials\'><span>RM</span></div>'" />
+                <div class="card-tag">The Brain</div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">Riley Morgan</div>
+                <div class="card-title">Analytics &amp; Research Lead</div>
+                <div class="card-bar"></div>
+                <p class="card-bio">Riley reads everything so you don't have to. Competitive intelligence, market analysis, content architecture, SEO strategy — she maps the entire landscape before anyone writes a single word.</p>
+            </div>
+        </a>
+
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="team-card">
+            <div class="card-photo">
+                <img src="/images/team/alex_headshot_800x800.png" alt="Alex Chin" onerror="this.parentElement.innerHTML='<div class=\'card-initials\'><span>AC</span></div>'" />
+                <div class="card-tag">The Amplifier</div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">Alex Chin</div>
+                <div class="card-title">Marketplace &amp; Paid Media Strategist</div>
+                <div class="card-bar"></div>
+                <p class="card-bio">Alex knows where every ad dollar goes — and makes each one work harder than the last. Amazon native. Equally lethal across Pinterest, Bing, and native ad networks. Ad spend into compounding revenue.</p>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+    <p class="cta-label">Work With This Team</p>
+    <p class="cta-text">"We only take 3–5 clients at a time.<br>Because depth beats breadth. Every time."</p>
+    <a href="https://ravingfans.ai" target="_blank" rel="noopener" class="cta-btn">
+        Learn More at RavingFans.ai
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+    </a>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>
+        © 2026 DanKnows.org · Asking the questions that matter.<br>
+        <a href="https://x.com/DanKnows" target="_blank" rel="noopener">@DanKnows</a>
+        &nbsp;·&nbsp;
+        <a href="/team.html">Meet My Team</a>
+        &nbsp;·&nbsp;
+        <a href="https://ravingfans.ai" target="_blank" rel="noopener">RavingFans.ai</a>
+    </p>
+</footer>
+
+</body>
+</html>
